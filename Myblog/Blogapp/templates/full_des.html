@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .content-wrapper {
+        width: 75%;
+        margin: 2% 5% 6%; /* added extra bottom margin so footer doesn't overlap */
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .title-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .post-title {
+        font-family: 'Georgia', serif;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .back-btn {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+        background-color: #1e7e34;
+    }
+
+    .post-date {
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #888;
+        margin-top: 10px;
+    }
+
+    .post-description {
+        margin-top: 15px;
+        font-family: 'Verdana', sans-serif;
+        line-height: 1.6;
+        color: #444;
+        text-align: justify;
+    }
+
+    .creator {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+
+    .highlight-name {
+        font-family: 'Arial Black', sans-serif;
+        color: #d35400;
+        background-color: #fff3cd;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .action-btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .edit-btn {
+        background-color: #007bff;
+        color: white;
+    }
+    .edit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+    .delete-btn:hover {
+        background-color: #a71d2a;
+    }
+
+    .action-btn a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* Footer Styles */
+    .footer {
+        background-color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 60px;
+    }
+    .footer a {
+        color: white;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    .footer a:hover {
+        color: #0b15d3ba;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: bisque;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="title-bar">
+        <span class="post-title">{{ detpost.title }}</span>
+        <a class="back-btn" href="{% url 'viewpost' %}">Back</a>
+    </div>
+
+    <div class="post-date">Date: {{ detpost.created_by }}</div>
+    
+    <p class="post-description">{{ detpost.description }}</p>
+
+    <h3 class="creator">
+        Created By: <span class="highlight-name">{{ detpost.user__first_name }}</span>
+    </h3>
+
+    <div class="action-buttons">
+        {% if type == 'admin' or type == 'creator' %}
+            <a href="{% url 'updatepost' detpost.id %}" class="action-btn edit-btn">Edit</a>
+            <a href="{% url 'deletepost' detpost.id %}" class="action-btn delete-btn">Delete</a>
+        {% endif %}
+    </div>
+
+    <h3>Comments:</h3>
+    {% for i in cmd %}
+    <div>
+        <strong>{{ i.user.first_name }}</strong> ({{ i.created_at|date:"Y-m-d H:i" }}):
+        <p>{{ i.content }}</p>
+    </div>
+    {% endfor %}
+
+    <h3>Leave a Comment:</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="content" rows="5" placeholder="Write your comment..." required></textarea>
+        <br>
+        <button type="submit">Post Comment</button>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="copyright">
+            &copy; 2025 My Blog | All rights reserved
+        </div>
+    </div>
+</footer>
+{% endblock %}

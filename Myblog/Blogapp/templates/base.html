@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* EBlog header */
+        .brand {
+            background-color: #f28b82;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 15px 30px;
+            letter-spacing: 2px;
+        }
+
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            background-color: lightgray;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 16px;
+        }
+
+        .nav-bar div {
+            padding: 20px 20px;
+        }
+
+        .nav-bar div a {
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+        }
+
+        .nav-bar div:hover {
+            background-color: black;
+        }
+
+        .nav-bar div:hover a {
+            color: whitesmoke;
+        }
+
+        .empty-nav {
+            flex: 1;
+        }
+
+        p {
+            font-weight: bold;
+            color: darkred;
+            font-size: medium;
+            margin: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Brand name -->
+    <div class="brand">E-Blog</div>
+
+    <div class="nav-bar">
+        <div><a href="{% url 'home' %}">Home</a></div>
+        <div><a href="{% url 'recentpost' %}">Recent Post</a></div>
+        {% if user.is_authenticated %}
+            <div><a href="{% url 'createpost' %}">Create Post</a></div>
+            <div><a href="{% url 'viewpost' %}">View Post</a></div> 
+            <div class="empty-nav"></div>
+            <p>Welcome {{ request.user.first_name }}</p>
+            <div><a href="{% url 'logout' %}">Logout</a></div>
+        {% else %}
+            <div><a href="{% url 'register' %}">Register</a></div>
+            <div><a href="{% url 'login' %}">Login</a></div>
+        {% endif %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

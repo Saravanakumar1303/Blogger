@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .main-form{
+        display: flex;
+        justify-content: space-around;
+        margin: 110px 0;
+    }
+    .sub-form{
+        padding: 20px;
+        background-color: darkturquoise;
+        border-radius: 20px;
+        box-shadow: 0px 0px 14px 0px black;
+    }
+    form div{
+        margin: 24px 0px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .submit-btn input{
+        padding: 6px 19px;
+        border-radius: 7px;
+        font-size: 14px;
+        color: maroon;
+        font-weight: bold;
+    }
+    h2{
+        color: indigo;
+    }
+    div label{
+        width: 128px;
+        color: ivory;
+    }
+    .user-type{
+        width: 200px;
+    }
+    select{
+        padding: 1px;
+        border-width: 1px;
+    }
+
+    /* Footer Styles */
+    .footer {
+        background-color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 40px;
+    }
+    .footer a {
+        color: white;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    .footer a:hover {
+        color: #0b15d3ba;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: bisque;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="main-form">
+    <div class="sub-form">
+        <div><center><h2>User Registration</h2></center></div>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="">First Name :</label> 
+                <input type="text" name="fname" required>
+            </div>
+            <div>
+                <label for="">Last Name :</label> 
+                <input type="text" name="lname" required>
+            </div>
+            <div>
+                <label for="">Email :</label> 
+                <input type="email" name="email" required>
+            </div>
+            <div>
+                <label for="">Password :</label> 
+                <input type="password" name="password" required>
+            </div>
+            <div class="user-type">
+                <label for="">User Type :</label>
+                <select name="usertype">
+                    <option value="admin">Admin</option>
+                    <option value="creator">Creator</option>
+                    <option value="reader">Reader</option>
+                </select>
+            </div>
+            <div class="submit-btn">
+                <input type="submit" value="Register">
+            </div>
+        </form> 
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="copyright">
+            &copy; 2025 My Blog | All rights reserved
+        </div>
+    </div>
+</footer>
+{% endblock %}

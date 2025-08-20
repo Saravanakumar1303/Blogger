@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .content-wrapper {
+        width: 70%;
+        margin: 5%;
+        margin-top: 1%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .post-container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+        background-color: #f9f9f9;
+        position: relative;
+    }
+
+    .post-title {
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .post-date {
+        font-size: 16px;
+        color: #888;
+        margin-top: 5px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .post-shortdescription {
+        margin: 10px 0;
+        line-height: 1.6;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: justify;
+    }
+
+    .view-btn {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+    .view-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .highlight-name {
+        font-family: 'Arial Black', sans-serif;
+        color: indigo;
+        background-color: #fff3cd;
+        padding: 1px 5px;
+        border-radius: 4px;
+    }
+    .back-btn {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        background-color: #28a745;
+    }
+    .back-btn:hover {
+        background-color: #1e7e34;
+    }
+
+    /* Footer Styles */
+    .footer {
+        background-color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 60px;
+    }
+    .footer a {
+        color: white;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    .footer a:hover {
+        color: #0b15d3ba;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: bisque;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="content-wrapper">
+    {% for p in post %}
+    <div class="post-container">
+        <span class="post-title">{{ p.title }}</span>
+        <div class="post-date">Date : {{ p.created_by }}</div>
+        <p class="post-shortdescription">{{ p.short_description }}</p>
+        <h3>Created By: <span class="highlight-name">{{ p.user__first_name }}</span></h3>
+        <a class="view-btn" href="{% url 'detailpost' p.id %}">View</a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="copyright">
+            &copy; 2025 My Blog | All rights reserved
+        </div>
+    </div>
+</footer>
+{% endblock %}

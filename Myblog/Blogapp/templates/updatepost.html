@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: #f4f6f8;
+        font-family: Arial, sans-serif;
+    }
+
+    form {
+        max-width: 450px;
+        margin: 60px auto;
+        padding: 25px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    fieldset {
+        border: none;
+        padding: 0;
+    }
+
+    legend {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        font-size: 14px;
+        resize: vertical;
+    }
+
+    textarea#short_des {
+        height: 60px; /* Shorter height */
+    }
+
+    textarea#description {
+        height: 120px; /* Taller height */
+    }
+
+    input[type="text"]:focus, textarea:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 5px rgba(74,144,226,0.3);
+    }
+
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #4a90e2;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #3b78c3;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Update Post</legend>
+
+        <label for="title">Title :</label>
+        <input type="text" name="title" id="title" value="{{post.title}}">
+
+        <label for="short_des">Short Description :</label>
+        <textarea name="short_des" id="short_des">{{post.short_description}}</textarea>
+
+        <label for="description">Description :</label>
+        <textarea name="description" id="description">{{post.description}}</textarea>
+
+        <input type="submit" value="Update">
+    </fieldset>
+</form>
+{% endblock %}
