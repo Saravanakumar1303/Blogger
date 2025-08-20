@@ -10,6 +10,9 @@ from Blogapp.models import Post,Comment
 # Create your views here.
 
 class HomeView(View):
+    """
+    This is homepage
+    """
     def get(self,request):
         return render(request,'home.html')
 
