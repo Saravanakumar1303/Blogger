@@ -16,7 +16,7 @@ class HomeView(View):
     def get(self,request):
         return render(request,'home.html')
 
-class RecentPostView(View):
+class RecentPostView(View): 
     def get(self, request):
         return render(request, 'recent.html')
     
@@ -122,7 +122,7 @@ class DetailedPost(View):
         user_obj =User_Reg.objects.filter(user=request.user)
         if user_obj:
             user_obj = user_obj.first()
-            type =user_obj.usertype
+            type =user_obj.usertype #type:ignore
         print("type",type)
         post_obj = Post.objects.filter(id=id).values('id','title','description','user__first_name','created_by')[0]
         comments = Comment.objects.filter(post_id=post_obj.get("id")).order_by("-created_at")
@@ -157,10 +157,10 @@ class UpdatePost(View):
                 post.short_description = request.POST.get('short_description',post.short_description) # type: ignore
                 post.description = request.POST.get('description',post.description) # type: ignore
                 post.save() # type: ignore
-                return redirect(f'/descpost/{post.id}')
+                return redirect(f'/descpost/{post.id}') # type: ignore
         except Exception as e:
             print("Expection :",e)
-        return redirect(f'/updatepost/{post.id}/')
+        return redirect(f'/updatepost/{post.id}/') #type: ignore
 
 class DeletePost(View):
     def get(self,request,id):
