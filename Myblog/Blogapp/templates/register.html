@@ -6,39 +6,67 @@
         justify-content: space-around;
         margin: 110px 0;
     }
-    .sub-form{
-        padding: 20px;
-        background-color: darkturquoise;
-        border-radius: 20px;
-        box-shadow: 0px 0px 14px 0px black;
-    }
-    form div{
-        margin: 24px 0px;
-        display: flex;
-        justify-content: space-around;
-    }
-    .submit-btn input{
-        padding: 6px 19px;
-        border-radius: 7px;
-        font-size: 14px;
-        color: maroon;
-        font-weight: bold;
-    }
-    h2{
-        color: indigo;
-    }
-    div label{
-        width: 128px;
-        color: ivory;
-    }
-    .user-type{
-        width: 200px;
-    }
-    select{
-        padding: 1px;
-        border-width: 1px;
+    body{
+    background:#f2f2f2;
+    font-family: Arial, Helvetica, sans-serif;
     }
 
+    .form-container{
+        width:520px;
+        margin:80px auto;
+        background:#19b6b5;
+        padding:40px;
+        border-radius:25px;
+        box-shadow:0px 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .form-container h2{
+        text-align:center;
+        color:#4b0082;
+        margin-bottom:30px;
+    }
+
+    .form-row{
+        display:flex;
+        align-items:center;
+        margin-bottom:20px;
+    }
+
+    .form-row label{
+        width:35%;
+        color:white;
+        font-size:18px;
+    }
+
+    /* All inputs increase 20% */
+
+    .large-input{
+        width:75%;
+        padding:8px;
+        border-radius:4px;
+        border:1px solid #ccc;
+    }
+
+    .btn-area{
+        text-align:center;
+        margin-top:20px;
+    }
+
+    button{
+        padding:10px 25px;
+        border-radius:10px;
+        border:2px solid black;
+        background:white;
+        font-weight:bold;
+        font-size: 16px ;
+        color:#b30000;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#4b0082;
+        color:white;
+    }
     /* Footer Styles */
     .footer {
         background-color: #333;
@@ -66,38 +94,47 @@
 </style>
 
 <div class="main-form">
-    <div class="sub-form">
-        <div><center><h2>User Registration</h2></center></div>
-        <form method="post">
-            {% csrf_token %}
-            <div>
-                <label for="">First Name :</label> 
-                <input type="text" name="fname" required>
+    <div class="form-container">
+
+        <h2>User Registration</h2>
+
+        <form method="POST">
+
+            <div class="form-row">
+                <label>First Name :</label>
+                <input type="text" class="large-input">
             </div>
-            <div>
-                <label for="">Last Name :</label> 
-                <input type="text" name="lname" required>
+
+            <div class="form-row">
+                <label>Last Name :</label>
+                <input type="text" class="large-input">
             </div>
-            <div>
-                <label for="">Email :</label> 
-                <input type="email" name="email" required>
+
+            <div class="form-row">
+                <label>Email :</label>
+                <input type="email" class="large-input">
             </div>
-            <div>
-                <label for="">Password :</label> 
-                <input type="password" name="password" required>
+
+            <div class="form-row">
+                <label>Password :</label>
+                <input type="password" class="large-input">
             </div>
-            <div class="user-type">
-                <label for="">User Type :</label>
-                <select name="usertype">
-                    <option value="admin">Admin</option>
-                    <option value="creator">Creator</option>
-                    <option value="reader">Reader</option>
+
+            <div class="form-row">
+                <label>User Type :</label>
+                <select class="large-input">
+                    <option>Admin</option>
+                    <option>Creator</option>
+                    <option>Reader</option>
                 </select>
             </div>
-            <div class="submit-btn">
-                <input type="submit" value="Register">
+
+            <div class="btn-area">
+                <button type="submit">Register</button>
             </div>
-        </form> 
+
+        </form>
+
     </div>
 </div>
 
