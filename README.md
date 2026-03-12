@@ -27,6 +27,7 @@ The project is designed to demonstrate core backend development concepts using D
   7. Comment System
   8. User Session Management
   9. Template Rendering
+  10. Pagination Implemented
 
 ⚙️ Tech Stack
 | Technology           | Purpose                   |
