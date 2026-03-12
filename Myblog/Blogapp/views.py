@@ -114,9 +114,9 @@ class CreatePost(View):
 class ViewPost(View):
     def get(self,request):
         post_obj =Post.objects.all().values('id','title','description','short_description','user__first_name','created_by').order_by('-created_by')
-        paginator = Paginator(post_obj, 5)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
+        paginators = Paginator(post_obj, 5)
+        page_numbers = request.GET.get('page')
+        page_obj = paginators.get_page(page_numbers)
         return render(request,'viewpost.html',{'post':page_obj})
 
 
