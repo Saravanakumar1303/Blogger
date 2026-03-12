@@ -7,33 +7,87 @@
         margin: -55px 0px;
     }
 
-    .sub-form {
-        padding: 20px;
-        background-color: darkturquoise;
-        border-radius: 20px;
-        box-shadow: 0px 0px 14px 0px black;
-        width: 430px;
-        margin: 140px auto 0; /* center form */
+    body{
+    background:#f2f2f2;
+    font-family: Arial, Helvetica, sans-serif;
     }
 
-    form div {
-        margin: 24px 0px;
-        display: flex;
-        justify-content: space-around;
+    .post-container{
+        width:550px;
+        margin:80px auto;
+        background:#17b7b5;
+        padding:40px;
+        border-radius:20px;
+        box-shadow:0px 10px 25px rgba(0,0,0,0.2);
     }
-    .submit-btn input {
-        padding: 6px 19px;
-        border-radius: 7px;
-        font-size: 14px;
-        color: maroon;
-        font-weight: bold;
+
+    .post-container h2{
+        text-align:center;
+        color:#4b0082;
+        margin-bottom:30px;
     }
-    h2 {
-        color: indigo;
+
+    .form-group{
+        display:flex;
+        align-items:center;
+        margin-bottom:20px;
     }
-    div label {
-        width: 150px;
-        color: ivory;
+
+    .form-group label{
+        width:35%;
+        color:white;
+        font-weight:bold;
+    }
+
+    .form-group input,
+    .form-group textarea{
+        width:65%;
+        padding:8px;
+        border-radius:5px;
+        border:1px solid #ccc;
+    }
+
+    /* 20% wider textbox */
+    .wide-input{
+        width:78%;
+    }
+
+    /* short description */
+    .short-desc{
+        height:60px;
+        resize:none;
+    }
+
+    /* long description */
+    .desc{
+        height:120px;
+        resize:none;
+    }
+
+    .char-limit{
+        display:block;
+        margin-left:35%;
+        font-size:12px;
+        color:#eee;
+    }
+
+    .btn-area{
+        text-align:center;
+        margin-top:20px;
+    }
+
+    button{
+        padding:10px 25px;
+        border-radius:10px;
+        border:2px solid #333;
+        background:white;
+        font-weight:bold;
+        cursor:pointer;
+    }
+
+    button:hover{
+        background:#4b0082;
+        color:white;
     }
 
     /* Footer Styles */
@@ -63,29 +117,34 @@
 </style>
 
 <div class="main-form">
-    <div class="sub-form">
-        <div><center><h2>Create Post</h2></center></div>
+    <div class="post-container">
+        <h2>Post Creation</h2>
         <form method="POST">
-            {% csrf_token %}
-            <div>
-                <label for="title">Title :</label>
-                <input type="text" name="title" id="title">
+            <div class="form-group">
+                <label>Title :</label>
+                <input type="text" name="title" maxlength="150" class="wide-input">
             </div>
-            <div>
-                <label for="postedby">Posted By :</label>
-                <input type="text" name="postedby" id="postedby" value="{{request.user.first_name}}">
+
+            <div class="form-group">
+                <label>Posted By :</label>
+                <input type="text" name="author" value="Sai" class="wide-input">
             </div>
-            <div>
-                <label for="short_des">Short Description :</label>
-                <input type="text" name="short_des" id="short_des">
+
+            <div class="form-group">
+                <label>Short Description :</label>
+                <textarea name="short_desc" maxlength="200" class="short-desc"></textarea>
             </div>
-            <div>            
-                <label for="des">Description :</label>
-                <input type="text" name="des" id="des">
+
+            <div class="form-group">
+                <label>Description :</label>
+                <textarea name="description" maxlength="1000" class="desc"></textarea>
+                
             </div>
-            <div class="submit-btn">
-                <input type="submit" value="Create Post">
+
+            <div class="btn-area">
+                <button type="submit">Create Post</button>
             </div>
+
         </form>
     </div>
 </div>

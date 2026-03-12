@@ -6,6 +6,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth import get_user_model,authenticate,login, logout
 from Blogapp.models import Post,Comment
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -112,8 +113,11 @@ class CreatePost(View):
         
 class ViewPost(View):
     def get(self,request):
-        post_obj =Post.objects.all().values('id','title','description','short_description','user__first_name','created_by')
-        return render(request,'viewpost.html',{'post':post_obj})
+        post_obj =Post.objects.all().values('id','title','description','short_description','user__first_name','created_by').order_by('-created_by')
+        paginators = Paginator(post_obj, 5)
+        page_numbers = request.GET.get('page')
+        page_obj = paginators.get_page(page_numbers)
+        return render(request,'viewpost.html',{'post':page_obj})
 
 
 class DetailedPost(View):
@@ -170,5 +174,5 @@ class DeletePost(View):
 
 class RecentpostView(View):
     def get(self,request):
-        post= Post.objects.all().values('id','title','short_description','user__first_name','created_by').order_by('-created_by')
+        post= Post.objects.all().values('id','title','short_description','user__first_name','created_by').order_by('-created_by')[:5]
         return render(request,'recentpost.html',{'post':post})
