@@ -4,7 +4,7 @@
     .main-form{
         display: flex;
         justify-content: space-around;
-        margin: 110px 0;
+        margin: 20px 0;
     }
     body{
     background:#f2f2f2;
@@ -99,33 +99,34 @@
         <h2>User Registration</h2>
 
         <form method="POST">
+        {% csrf_token %}
 
             <div class="form-row">
                 <label>First Name :</label>
-                <input type="text" class="large-input">
+                <input type="text" name="fname" class="large-input">
             </div>
 
             <div class="form-row">
                 <label>Last Name :</label>
-                <input type="text" class="large-input">
+                <input type="text" name= "lname" class="large-input">
             </div>
 
             <div class="form-row">
                 <label>Email :</label>
-                <input type="email" class="large-input">
+                <input type="email" name="email" class="large-input">
             </div>
 
             <div class="form-row">
                 <label>Password :</label>
-                <input type="password" class="large-input">
+                <input type="password" name="password" class="large-input">
             </div>
 
             <div class="form-row">
                 <label>User Type :</label>
-                <select class="large-input">
-                    <option>Admin</option>
-                    <option>Creator</option>
-                    <option>Reader</option>
+                <select name ="usertype" class="large-input">
+                    <option value="admin">Admin</option>
+                    <option value="creator">Creator</option>
+                    <option value="reader">Reader</option>
                 </select>
             </div>
 

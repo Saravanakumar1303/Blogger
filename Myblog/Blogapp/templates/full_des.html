@@ -52,7 +52,10 @@
         font-family: 'Verdana', sans-serif;
         line-height: 1.6;
         color: #444;
+        white-space: pre-line;
+        line-height: 1.7;
         text-align: justify;
+        margin-bottom: 15px;
     }
 
     .creator {
@@ -139,7 +142,7 @@
 
     <div class="post-date">Date: {{ detpost.created_by }}</div>
     
-    <p class="post-description">{{ detpost.description }}</p>
+    <p class="post-description">{{ detpost.description|linebreaksbr }}</p>
 
     <h3 class="creator">
         Created By: <span class="highlight-name">{{ detpost.user__first_name }}</span>
