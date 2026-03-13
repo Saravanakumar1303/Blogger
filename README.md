@@ -19,7 +19,7 @@ The project is designed to demonstrate core backend development concepts using D
 🧠 Key Concepts Demonstrated
 
   1. Django Class-Based Views
-  2. Django Authentication System
+  2. Django Authentication & Authorization System
   3. CRUD Operations
   4. Form Handling
   5. Data Validation using Regex
