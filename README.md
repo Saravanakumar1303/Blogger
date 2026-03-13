@@ -12,7 +12,7 @@ E-Blog is a simple blogging platform where users can:
   2. Create and publish blog posts
   3. Update and delete posts
   4. View posts from other users
-  5. Comment on blog posts
+  5. Like, Dislike and Comment on blog posts
 
 The project is designed to demonstrate core backend development concepts using Django.
 
@@ -24,7 +24,7 @@ The project is designed to demonstrate core backend development concepts using D
   4. Form Handling
   5. Data Validation using Regex
   6. Database Relationships
-  7. Comment System
+  7. Like, Dislike and Comment System
   8. User Session Management
   9. Template Rendering
   10. Pagination Implemented
