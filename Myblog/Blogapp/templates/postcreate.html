@@ -120,6 +120,7 @@
     <div class="post-container">
         <h2>Post Creation</h2>
         <form method="POST">
+        {% csrf_token %}
             <div class="form-group">
                 <label>Title :</label>
                 <input type="text" name="title" maxlength="150" class="wide-input">
@@ -132,12 +133,12 @@
 
             <div class="form-group">
                 <label>Short Description :</label>
-                <textarea name="short_desc" maxlength="200" class="short-desc"></textarea>
+                <textarea name="short_des" maxlength="200" class="short-des"></textarea>
             </div>
 
             <div class="form-group">
                 <label>Description :</label>
-                <textarea name="description" maxlength="1000" class="desc"></textarea>
+                <textarea name="des" maxlength="1000" class="desc"></textarea>
                 
             </div>
 

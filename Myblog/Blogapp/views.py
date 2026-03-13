@@ -93,31 +93,39 @@ class Logoutview(View):
         logout(request)
         return redirect('home')
     
-class CreatePost(LoginRequiredMixin,View):
-    def get(self,request):
+class CreatePost(LoginRequiredMixin, View):
+
+    def get(self, request):
         user_role = User_Reg.objects.filter(user=request.user).first()
+
         if not user_role:
-            messages.error(request,"User role not found")
+            messages.error(request, "User role not found")
             return redirect('detailpost')
 
         if user_role.usertype == "reader":
-            messages.error(request,"Reader cannot create post")
+            messages.error(request, "Reader cannot create post")
             return redirect('detailpost')
-        return render(request,'postcreate.html')
 
-    def post(self,request):
+        return render(request, 'postcreate.html')
+
+
+    def post(self, request):
         title = request.POST.get('title')
         short_description = request.POST.get('short_des')
         description = request.POST.get('des')
 
         if title and description:
             Post.objects.create(
-                user = request.user,
-                title = title,
-                short_description = short_description,
-                description = description
+                user=request.user,
+                title=title,
+                short_description=short_description,
+                description=description
             )
+            messages.success(request, "Post created successfully")
             return redirect('viewpost')
+
+        messages.error(request, "Title and Description required")
+        return redirect('createpost')
         
 class ViewPost(View):
     def get(self,request):
@@ -131,17 +139,18 @@ class ViewPost(View):
 class DetailedPost(View):
     def get(self,request,id):
         type = None
-        user_obj =User_Reg.objects.filter(user=request.user)
+        user_obj =User_Reg.objects.filter(user=request.user).first()
         if user_obj:
-            user_obj = user_obj.first()
             type =user_obj.usertype #type:ignore
         print("type",type)
-        post_obj = Post.objects.filter(id=id).values('id','title','description','user__first_name','created_by')[0]
-        comments = Comment.objects.filter(post_id=post_obj.get("id")).order_by("-created_at")
-        return render(request,'full_des.html',{'detpost':post_obj,'type':type,'cmd':comments})
+        post_obj = get_object_or_404(Post, id=id)
+        comments = Comment.objects.filter(post_id=post_obj).order_by("-created_at")
+        post_likes = post_obj.likes.filter(value=1).count()
+        post_dislikes = post_obj.likes.filter(value=-1).count()
+        return render(request,'full_des.html',{'detpost':post_obj,'type':type,'cmd':comments,'post_likes': post_likes,'post_dislikes': post_dislikes})
     
     def post(self, request, id):
-        post = Post.objects.get(id=id)
+        post = get_object_or_404(Post, id=id)
         content = request.POST.get("content")
         if content:
             Comment.objects.create(post=post, user=request.user, content=content)
@@ -153,7 +162,6 @@ class UpdatePost(View):
         try:
             post = Post.objects.filter(id=id).first()
             if post:
-
                 if post.user != request.user:
                     messages.error(request,"You cannot edit this post")
                     return redirect('detailpost')

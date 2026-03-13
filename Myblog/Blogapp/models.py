@@ -17,11 +17,11 @@ class Post(models.Model):
     title = models.CharField(max_length=55)
     short_description = models.TextField(max_length=400)
     description = models.TextField(max_length=1000)
-    created_by =models.DateField(auto_now_add=True)
+    created_by =models.DateTimeField(auto_now_add=True)
     user =models.ForeignKey(User,on_delete=models.CASCADE)
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE) 
     user =models.ForeignKey(User,on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -32,7 +32,7 @@ class Like(models.Model):
         (-1, 'Dislike')
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
     value = models.SmallIntegerField(choices=Like_Choices)
 
     class Meta: 

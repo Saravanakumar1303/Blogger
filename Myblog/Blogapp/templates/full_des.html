@@ -3,7 +3,7 @@
 <style>
     .content-wrapper {
         width: 75%;
-        margin: 2% 5% 6%; /* added extra bottom margin so footer doesn't overlap */
+        margin: 2% 5% 6%;
         padding: 20px;
         box-sizing: border-box;
         background-color: #f9f9f9;
@@ -50,12 +50,11 @@
     .post-description {
         margin-top: 15px;
         font-family: 'Verdana', sans-serif;
-        line-height: 1.6;
-        color: #444;
-        white-space: pre-line;
         line-height: 1.7;
+        color: #444;
         text-align: justify;
         margin-bottom: 15px;
+        white-space: pre-line;
     }
 
     .creator {
@@ -70,6 +69,7 @@
         padding: 2px 6px;
         border-radius: 4px;
     }
+
     .action-buttons {
         display: flex;
         justify-content: flex-end;
@@ -87,6 +87,7 @@
         text-decoration: none;
         transition: all 0.3s ease;
     }
+
     .edit-btn {
         background-color: #007bff;
         color: white;
@@ -103,11 +104,53 @@
         background-color: #a71d2a;
     }
 
-    .action-btn a {
-        color: inherit;
-        text-decoration: none;
+    .like-dislike-buttons form {
+        display: inline;
     }
 
+    .like-dislike-buttons button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    }
+    .comment-btn{
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+    .comment-btn:hover{
+        background-color: #0056b3;
+    }
+    .like-btn {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .like-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .dislike-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .dislike-btn:hover {
+        background-color: #a71d2a;
+    }
     /* Footer Styles */
     .footer {
         background-color: #333;
@@ -135,19 +178,24 @@
 </style>
 
 <div class="content-wrapper">
+    <!-- Title and Back Button -->
     <div class="title-bar">
         <span class="post-title">{{ detpost.title }}</span>
         <a class="back-btn" href="{% url 'viewpost' %}">Back</a>
     </div>
 
+    <!-- Post Date -->
     <div class="post-date">Date: {{ detpost.created_by }}</div>
     
+    <!-- Post Description -->
     <p class="post-description">{{ detpost.description|linebreaksbr }}</p>
 
+    <!-- Creator Info -->
     <h3 class="creator">
-        Created By: <span class="highlight-name">{{ detpost.user__first_name }}</span>
+        Created By: <span class="highlight-name">{{ detpost.user.first_name }}</span>
     </h3>
 
+    <!-- Admin / Creator Actions -->
     <div class="action-buttons">
         {% if type == 'admin' or type == 'creator' %}
             <a href="{% url 'updatepost' detpost.id %}" class="action-btn edit-btn">Edit</a>
@@ -155,20 +203,41 @@
         {% endif %}
     </div>
 
-    <h3>Comments:</h3>
-    {% for i in cmd %}
-    <div>
-        <strong>{{ i.user.first_name }}</strong> ({{ i.created_at|date:"Y-m-d H:i" }}):
-        <p>{{ i.content }}</p>
+   <!-- Like / Dislike Buttons -->
+    <div class="like-dislike-buttons" style="margin-top:15px;">
+        <form action="{% url 'like_post' detpost.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="like-btn">
+                👍 Like ({{ post_likes }})
+            </button>
+        </form>
+
+        <form action="{% url 'dislike_post' detpost.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="dislike-btn">
+                👎 Dislike ({{ post_dislikes }})
+            </button>
+        </form>
     </div>
+
+    <!-- Comments Section -->
+    <h3 style="margin-top:20px;">Comments:</h3>
+    {% for i in cmd %}
+        <div class="comment-block">
+            <strong>{{ i.user.first_name }}</strong> ({{ i.created_at|date:"Y-m-d H:i" }}):
+            <p>{{ i.content }}</p>
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
     {% endfor %}
 
-    <h3>Leave a Comment:</h3>
+    <!-- Comment Form -->
+    <h3 style="margin-top:20px;">Leave a Comment:</h3>
     <form method="POST">
         {% csrf_token %}
         <textarea name="content" rows="5" placeholder="Write your comment..." required></textarea>
         <br>
-        <button type="submit">Post Comment</button>
+        <button type="submit" class="comment-btn">Post Comment</button>
     </form>
 </div>
 
