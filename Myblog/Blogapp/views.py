@@ -142,7 +142,7 @@ class DetailedPost(View):
         user_obj =User_Reg.objects.filter(user=request.user).first()
         if user_obj:
             type =user_obj.usertype #type:ignore
-        print("type",type)
+        
         post_obj = get_object_or_404(Post, id=id)
         comments = Comment.objects.filter(post_id=post_obj).order_by("-created_at")
         post_likes = post_obj.likes.filter(value=1).count()
