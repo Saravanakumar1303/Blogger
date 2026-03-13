@@ -14,4 +14,6 @@ urlpatterns =[
     path('updatepost/<int:id>/',UpdatePost.as_view(),name="updatepost"),
     path('deletepost/<int:id>/',DeletePost.as_view(),name='deletepost'),
     path('recentpost/',RecentpostView.as_view(),name="recentpost"),
+    path('like/<int:post_id>/', LikePostView.as_view(), name='like_post'),
+    path('dislike/<int:post_id>/', DislikePostView.as_view(), name='dislike_post'),
 ]

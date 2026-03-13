@@ -1,11 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 import re
 from django.contrib import messages
 from Blogapp.models import User_Reg
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model,authenticate,login,logout
-from Blogapp.models import Post,Comment
+from Blogapp.models import Post,Comment,Like
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -189,3 +189,36 @@ class RecentpostView(View):
     def get(self,request):
         post= Post.objects.all().values('id','title','short_description','user__first_name','created_by').order_by('-created_by')[:5]
         return render(request,'recentpost.html',{'post':post})
+
+class LikePostView(LoginRequiredMixin,View):
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+
+        try:
+            reaction = Like.objects.get(user=user, post=post)
+
+            if reaction.value == 1:
+                reaction.delete()
+            else:
+                reaction.value = 1
+                reaction.save()
+        except Like.DoesNotExist:
+            Like.objects.create(user=user, post=post, value=1)
+        return redirect(request.META.get('HTTP_REFERER'))
+    
+class DislikePostView(LoginRequiredMixin, View):
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+
+        try:
+            reaction = Like.objects.get(user=user, post=post)
+            if reaction.value == -1:
+                reaction.delete()
+            else:
+                reaction.value = -1
+                reaction.save()
+        except Like.DoesNotExist:
+            Like.objects.create(user=user, post=post, value = -1)
+        return redirect(request.META.get('HTTP_REFERER'))

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Blogapp.models import User_Reg,Post,Comment
+from Blogapp.models import User_Reg,Post,Comment,Like
 
 @admin.register(User_Reg)
 class UserRegAdmin(admin.ModelAdmin):
@@ -13,3 +13,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display =("user","content","created_at")
+
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    list_display = ("user","post","value")
