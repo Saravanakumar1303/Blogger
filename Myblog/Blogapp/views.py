@@ -3,8 +3,8 @@ import re
 from django.contrib import messages
 from Blogapp.models import User_Reg
 from django.views import View
-from django.contrib import messages
-from django.contrib.auth import get_user_model,authenticate,login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model,authenticate,login,logout
 from Blogapp.models import Post,Comment
 from django.core.paginator import Paginator
 
@@ -93,8 +93,16 @@ class Logoutview(View):
         logout(request)
         return redirect('home')
     
-class CreatePost(View):
+class CreatePost(LoginRequiredMixin,View):
     def get(self,request):
+        user_role = User_Reg.objects.filter(user=request.user).first()
+        if not user_role:
+            messages.error(request,"User role not found")
+            return redirect('detailpost')
+
+        if user_role.usertype == "reader":
+            messages.error(request,"Reader cannot create post")
+            return redirect('detailpost')
         return render(request,'postcreate.html')
 
     def post(self,request):
@@ -143,20 +151,25 @@ class DetailedPost(View):
 class UpdatePost(View):
     def get(self,request,id):
         try:
-            post = Post.objects.filter(id=id).values()
+            post = Post.objects.filter(id=id).first()
             if post:
-                post = post[0]
+
+                if post.user != request.user:
+                    messages.error(request,"You cannot edit this post")
+                    return redirect('detailpost')
                 return render(request,'updatepost.html',{'post':post})
         except Exception as e:
             print("Exception :",e)
-            return redirect('detailpost')
-
+        return redirect('detailpost')
+    
     def post(self,request,id):
         try:
-            post = Post.objects.filter(id=id)
-            print("post",post)
+            post = Post.objects.filter(id=id).first()
+            #print("post",post)
             if post:
-                post = post.first()
+                if post.user != request.user:
+                    messages.error(request,"Permission denied")
+                    return redirect('detailpost')
                 post.title = request.POST.get('title',post.title) # type: ignore
                 post.short_description = request.POST.get('short_description',post.short_description) # type: ignore
                 post.description = request.POST.get('description',post.description) # type: ignore
