@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+
+    body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    background:#f4f4f4;
+    }
+    /* Blog container */
+
+    .blog-container{
+        width:70%;
+        margin:50px auto;
+        background:white;
+        padding:40px;
+        border-radius:10px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Title */
+
+    .blog-title{
+        font-size:32px;
+        margin-bottom:10px;
+        color:#2c3e50;
+    }
+
+    /* Date */
+
+    .blog-date{
+        color:gray;
+        font-size:14px;
+        margin-bottom:25px;
+    }
+
+    /* Content */
+
+    .blog-content{
+        line-height:1.7;
+        font-size:18px;
+        color:#333;
+    }
+
+    /* Code block */
+
+    .code{
+        background:#272822;
+        color:#f8f8f2;
+        padding:15px;
+        border-radius:5px;
+        margin:20px 0;
+        font-family:monospace;
+    }
+
+    /* Back button */
+
+    .back-btn{
+        display:inline-block;
+        margin-top:30px;
+        padding:10px 20px;
+        background:#3498db;
+        color:white;
+        text-decoration:none;
+        border-radius:5px;
+    }
+
+    .back-btn:hover{
+        background:#2980b9;
+    }
+    /* Footer Styles */
+    .footer {
+        background-color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 60px;
+    }
+    .footer a {
+        color: white;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    .footer a:hover {
+        color: #0b15d3ba;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: bisque;
+        margin-top: 10px;
+    }
+</style>
+<div class="blog-container">
+
+    <h1 class="blog-title">Getting Started with Python</h1>
+
+    <div class="blog-date"> Published on March 15, 2026 </div>
+
+    <div class="blog-content">
+        <p>
+            If you are new to programming, Python is a great language to start with.
+            Its syntax is very clean and easy to understand compared to many other languages.
+        </p>
+
+        <h3>Example Python Code</h3>
+
+        <div class="code">  print("Hello World") </div>
+
+        <p>
+        This simple line of code prints the message "Hello World" to the screen. It is usually the first program beginners write while learning a new programming language.
+        </p>
+
+        <p>
+        As you continue learning Python, you will explore concepts like variables,
+        loops, functions, and object-oriented programming. Frameworks such as Django
+        allow developers to build powerful web applications quickly.
+        </p>
+
+        <a href="/" class="back-btn">← Back to Home</a>
+
+    </div>
+</div>
+<!-- Footer -->
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="copyright">
+            &copy; 2025 My Blog | All rights reserved
+        </div>
+    </div>
+</footer>
+{% endblock %}

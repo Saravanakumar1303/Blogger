@@ -230,3 +230,15 @@ class DislikePostView(LoginRequiredMixin, View):
         except Like.DoesNotExist:
             Like.objects.create(user=user, post=post, value = -1)
         return redirect(request.META.get('HTTP_REFERER'))
+
+class PythonStartView(View):
+    def get(self, request):
+        return render(request,'pythonstart.html')
+
+class WebDesigntipsView(View):
+    def get(self, request):
+        return render(request, 'webdesigntips.html')
+
+class DjangoadvantageView(View):
+    def get(self, request):
+        return render(request, 'djangoadvantage.html')

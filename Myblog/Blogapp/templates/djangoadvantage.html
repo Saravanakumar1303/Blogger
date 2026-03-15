@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .container{
+    max-width:900px;
+    margin:40px auto;
+    background:white;
+    padding:40px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.title{
+    font-size:32px;
+    margin-bottom:10px;
+    color:#2c3e50;
+}
+
+.date{
+    color:gray;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.content{
+    font-size:18px;
+    line-height:1.7;
+    color:#333;
+}
+
+.code{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    border-radius:5px;
+    margin:20px 0;
+    font-family:monospace;
+}
+
+.back{
+    display:inline-block;
+    margin-top:30px;
+    padding:10px 20px;
+    background:#3498db;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+.back:hover{
+    background:#2980b9;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.container{
+    margin:20px;
+    padding:25px;
+}
+
+.title{
+    font-size:26px;
+}
+
+.content{
+    font-size:16px;
+}
+}
+  /* Footer */
+
+    .footer {
+        background-color:#333;
+        padding:20px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-wrap:wrap;
+        margin-top:60px;
+    }
+
+    .footer a{
+        color:white;
+        margin:0 15px;
+        font-size:20px;
+    }
+
+    .footer a:hover{
+        color:#0b15d3ba;
+    }
+
+    .copyright{
+        width:100%;
+        text-align:center;
+        color:bisque;
+        margin-top:10px;
+    }
+
+    /* Responsive */
+
+    @media(max-width:768px)
+    {
+
+        .container{
+            margin:20px;
+            padding:25px;
+        }
+
+        .title{
+            font-size:26px;
+        }
+
+        .content{
+            font-size:16px;
+        }
+
+    }
+
+</style>
+<div class="container">
+
+<h1 class="title">The Major Advantages of Django</h1>
+
+<div class="date">
+Published on March 15, 2026
+</div>
+
+<div class="content">
+
+<p>
+Django is one of the most powerful and popular Python web frameworks. It helps developers build secure, scalable, and maintainable web applications quickly. Many large companies use Django to power their websites and applications.
+</p>
+
+<h3>1. Fast Development</h3>
+
+<p>
+Django is designed to help developers build applications quickly. It provides many built-in features like authentication, admin panel, and ORM which reduce development time significantly.
+</p>
+
+<h3>2. Built-in Admin Panel</h3>
+
+<p>
+One of Django's most powerful features is its automatic admin interface. Developers can manage database records easily without writing additional code.
+</p>
+
+<div class="code">
+python manage.py createsuperuser
+</div>
+
+<p>
+Using this command, developers can create an admin user and access the Django admin dashboard.
+</p>
+
+<h3>3. High Security</h3>
+
+<p>
+Django protects applications against many common security threats such as SQL injection, cross-site scripting (XSS), cross-site request forgery (CSRF), and clickjacking.
+</p>
+
+<h3>4. Scalable Architecture</h3>
+
+<p>
+Django is used by large platforms that handle millions of users. Its architecture supports scaling applications efficiently as traffic grows.
+</p>
+
+<h3>5. Large Community Support</h3>
+
+<p>
+Django has a huge developer community. There are thousands of libraries, tutorials, and documentation available which makes learning and development easier.
+</p>
+
+<h3>6. Powerful ORM</h3>
+
+<p>
+Django ORM allows developers to interact with databases using Python code instead of writing complex SQL queries.
+</p>
+
+<div class="code">
+Post.objects.all()
+</div>
+
+<p>
+This simple query fetches all records from the Post model using Django ORM.
+</p>
+
+<p>
+Because of these advantages, Django is widely used for building blogs, e-commerce platforms, APIs, and large-scale web applications.
+</p>
+
+<a href="/" class="back">← Back to Home</a>
+
+</div>
+
+</div>
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+
+        <div class="copyright">
+        © 2025 My Blog | All rights reserved
+        </div>
+    </div>
+</footer>
+{% endblock%}

@@ -16,4 +16,7 @@ urlpatterns =[
     path('recentpost/',RecentpostView.as_view(),name="recentpost"),
     path('like/<int:post_id>/', LikePostView.as_view(), name='like_post'),
     path('dislike/<int:post_id>/', DislikePostView.as_view(), name='dislike_post'),
+    path('pythonstart/',PythonStartView.as_view(), name="pythonstart"),
+    path('webdesign/', WebDesigntipsView.as_view(), name="webdesigntips"),
+    path('djangoadvantage/',DjangoadvantageView.as_view(), name="djangoadvantage")
 ]
