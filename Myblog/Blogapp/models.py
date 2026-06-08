@@ -19,6 +19,8 @@ class Post(models.Model):
     description = models.TextField(max_length=1000)
     created_by =models.DateTimeField(auto_now_add=True)
     user =models.ForeignKey(User,on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
+    approved_at = models.DateTimeField(null=True, blank=True)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE) 

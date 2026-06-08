@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    .profile-container {
+        width: 60%;
+        margin: 40px auto;
+        background: lightseagreen;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .profile-title {
+        text-align: center;
+        color: whitesmoke;
+        margin-bottom: 25px;
+        
+    }
+
+    .profile-row {
+        margin-bottom: 15px;
+        font-size: 18px;
+    
+    }
+
+    .label {
+        font-weight: bold;
+        color:#f8f9fa;
+    }
+
+    .value {
+        color: #fff8dc; 
+    }
+    
+    .my-posts-section {
+        margin-top: 25px;
+        text-align: left;
+    }
+
+    .my-posts-btn {
+        display: inline-block;
+        background-color: #3776AB;
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .my-posts-btn:hover {
+        background-color: #2b5d87;
+    }
+    /* Footer Styles */
+    .footer {
+        background-color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 120px;
+    }
+    .footer a {
+        color: white;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    .footer a:hover {
+        color: #0b15d3ba;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: bisque;
+        margin-top: 10px;
+    }
+
+</style>
+
+<div class="profile-container">
+
+    <h2 class="profile-title">My Profile</h2>
+
+    <div class="profile-row">
+        <span class="label">First Name:</span>
+        <span class="value">{{ request.user.first_name }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span class="label">Last Name:</span>
+        <span class="value">{{ request.user.last_name }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span class="label">Email:</span>
+        <span class="value">{{ request.user.email }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span class="label">Role:</span>
+        <span class="value">{{ user_role.usertype }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span class="label">Total Posts:</span>
+        <span class="value">{{ total_posts }}</span>
+    </div>
+
+    <div class="profile-row">
+        <span class="label">Joined Date:</span>
+        <span class="value">
+            {{ request.user.date_joined|date:"d M Y" }}
+        </span>
+    </div>
+
+    <div class="my-posts-section">
+        <a href="{% url 'myposts' %}" class="my-posts-btn">My Posts</a>
+    </div>
+
+</div>
+<!-- Footer -->
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="copyright">
+            &copy; 2025 PyCodeSphere | All rights reserved
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

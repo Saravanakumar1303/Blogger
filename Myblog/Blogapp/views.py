@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model,authenticate,login,logout
 from Blogapp.models import Post,Comment,Like
 from django.core.paginator import Paginator
+from django.utils import timezone
 
 # Create your views here.
 
@@ -79,7 +80,10 @@ class LoginView(View):
             #print("User :",user)
             if user:
                 login(request,user)
-                messages.error(request,"Login Succesfully!")
+                user_role = User_Reg.objects.filter(user=user).first()
+                if user_role:
+                    request.session['user_role'] = user_role.usertype
+                messages.success(request,"Login Succesfully!")
                 return redirect('home')
             else:
                 messages.error(request,'Invalid Email or password!')
@@ -90,6 +94,7 @@ class LoginView(View):
         
 class Logoutview(View):
     def get(self,request):
+        request.session.flush()
         logout(request)
         return redirect('home')
     
@@ -126,10 +131,52 @@ class CreatePost(LoginRequiredMixin, View):
 
         messages.error(request, "Title and Description required")
         return redirect('createpost')
-        
+
+class PendingPostView(LoginRequiredMixin, View):
+    def get(self, request):
+        user_role = User_Reg.objects.filter(user=request.user,usertype="admin").first()
+
+        if not user_role:
+            messages.error(request, "Only admin can access this page")
+            return redirect('home')
+
+        posts = Post.objects.filter(is_approved=False).order_by('-created_by')
+
+        return render(request,'pending_posts.html',{'posts': posts})
+
+class ApprovePostView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        user_role = User_Reg.objects.filter(user=request.user,usertype="admin").first()
+
+        if not user_role:
+            messages.error(request, "Only admin can approve posts")
+            return redirect('home')
+
+        post = get_object_or_404(Post, id=post_id)
+
+        post.is_approved = True
+        post.approved_at = timezone.now()
+        post.save()
+
+        messages.success(request, "Post approved successfully")
+
+        return redirect('pending_posts')
+    
+class RejectPostView(LoginRequiredMixin, View):
+    def get(self, request, post_id):
+        user_role = User_Reg.objects.filter(user=request.user,usertype="admin").first()
+        if not user_role:
+            messages.error(request, "Only admin can reject posts")
+            return redirect('home')
+
+        post = get_object_or_404(Post, id=post_id)
+        post.delete()
+        messages.success(request,"Post rejected and deleted successfully")
+        return redirect('pending_posts')
+
 class ViewPost(View):
     def get(self,request):
-        post_obj =Post.objects.all().values('id','title','description','short_description','user__first_name','created_by').order_by('-created_by')
+        post_obj =Post.objects.filter(is_approved=True).values('id','title','description','short_description','user__first_name','created_by').order_by('-created_by')
         paginators = Paginator(post_obj, 5)
         page_numbers = request.GET.get('page')
         page_obj = paginators.get_page(page_numbers)
@@ -158,34 +205,41 @@ class DetailedPost(View):
     
 
 class UpdatePost(View):
-    def get(self,request,id):
+    def get(self, request, id):
         try:
             post = Post.objects.filter(id=id).first()
+
             if post:
                 if post.user != request.user:
-                    messages.error(request,"You cannot edit this post")
-                    return redirect('detailpost')
-                return render(request,'updatepost.html',{'post':post})
+                    messages.error(request, "You cannot edit this post")
+                    return redirect('detailpost', id=id)
+
+                return render(request, 'updatepost.html', {'post': post})
+
         except Exception as e:
-            print("Exception :",e)
-        return redirect('detailpost')
+            print("Exception :", e)
+
+        return redirect('detailpost', id=id)
     
-    def post(self,request,id):
+    def post(self, request, id):
         try:
             post = Post.objects.filter(id=id).first()
-            #print("post",post)
+
             if post:
                 if post.user != request.user:
-                    messages.error(request,"Permission denied")
-                    return redirect('detailpost')
-                post.title = request.POST.get('title',post.title) # type: ignore
-                post.short_description = request.POST.get('short_description',post.short_description) # type: ignore
-                post.description = request.POST.get('description',post.description) # type: ignore
-                post.save() # type: ignore
-                return redirect(f'/descpost/{post.id}') # type: ignore
+                    messages.error(request, "Permission denied")
+                    return redirect('detailpost', id=id)
+
+                post.title = request.POST.get('title', post.title)
+                post.short_description = request.POST.get('short_description', post.short_description)
+                post.description = request.POST.get('description', post.description)
+                post.save()
+
+                return redirect('detailpost', id=post.id)
         except Exception as e:
-            print("Expection :",e)
-        return redirect(f'/updatepost/{post.id}/') #type: ignore
+            print("Exception :", e)
+
+        return redirect('detailpost', id=id)
 
 class DeletePost(View):
     def get(self,request,id):
@@ -242,3 +296,22 @@ class WebDesigntipsView(View):
 class DjangoadvantageView(View):
     def get(self, request):
         return render(request, 'djangoadvantage.html')
+
+class SearchPostView(View):
+    def get(self, request):
+        query = request.GET.get('q')
+        posts = Post.objects.filter(is_approved=True)
+        if query:
+            posts = posts.filter(title__icontains=query)
+        return render(request, 'search.html', {'posts': posts, 'query': query})
+
+class ProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        user_role = User_Reg.objects.filter(user=request.user).first()
+        total_posts = Post.objects.filter(user=request.user).count()
+        return render(request,'profile.html',{'user_role': user_role,'total_posts': total_posts})
+    
+class MyPostsView(LoginRequiredMixin, View):
+    def get(self, request):
+        posts = Post.objects.filter(user=request.user).order_by('-created_by')
+        return render( request,'myposts.html', {'posts': posts})

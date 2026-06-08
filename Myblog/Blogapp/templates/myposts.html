@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .container {
+        width: 95%;
+        margin: 20px;
+    }
+
+    .page-title {
+        background: lightseagreen;
+        color: white;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 25px;
+    }
+
+    .post-card {
+        background: white;
+        border-left: 5px solid #3776AB;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .post-title {
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .post-desc {
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .status-approved {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-pending {
+        color: orange;
+        font-weight: bold;
+    }
+
+    .empty-posts {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+    /* Footer Styles */
+    .footer {
+        background-color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 60px;
+    }
+    .footer a {
+        color: white;
+        margin: 0 15px;
+        font-size: 20px;
+    }
+    .footer a:hover {
+        color: #0b15d3ba;
+    }
+    .copyright {
+        width: 100%;
+        text-align: center;
+        color: bisque;
+        margin-top: 10px;
+    }
+
+</style>
+
+<div class="container">
+    <h2 class="page-title">My Posts</h2>
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post-card">
+                    <h3 class="post-title">{{ post.title }}</h3>
+                    <p class="post-desc">{{ post.short_description }}</p>
+
+                    {% if post.is_approved %}
+                        <p class="status-approved">Status : Approved </p>
+                    {% else %}
+                        <p class="status-pending">Status : Pending Approval</p>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="empty-posts">
+            <h3>No Posts Created Yet</h3>
+        </div>
+
+        {% endif %}
+    
+</div>
+<!-- Footer -->
+<footer>
+    <div class="footer">
+        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="copyright">
+            &copy; 2025 PyCodeSphere | All rights reserved
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

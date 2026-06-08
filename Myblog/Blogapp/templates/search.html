@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    .search-container {
+    width: 95%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+    .search-title {
+        color: #333;
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .search-query {
+        color: #666;
+        margin-bottom: 25px;
+        font-size: 16px;
+        margin-left: 1px;
+    }
+
+    .post-card {
+        background: #fff;
+        border-left: 5px solid #3776AB;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .post-title {
+        margin: 0;
+        color: #222;
+        font-size: 24px;
+    }
+
+    .post-description {
+        color: #555;
+        line-height: 1.6;
+        margin: 15px 0;
+    }
+
+    .post-author {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .view-btn {
+        display: inline-block;
+        background-color: #3776AB;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .view-btn:hover {
+        background-color: #2b5d87;
+    }
+
+    .no-results {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+</style>
+
+<div class="search-container">
+
+    <h2 class="search-title">Search Results</h2>
+
+    {% if query %}
+        <p class="search-query">
+            Results for:
+            <strong>"{{ query }}"</strong>
+        </p>
+    {% endif %}
+
+    {% if posts %}
+
+        {% for post in posts %}
+
+            <div class="post-card">
+
+                <h3 class="post-title">
+                    {{ post.title }}
+                </h3>
+
+                <p class="post-description">
+                    {{ post.short_description }}
+                </p>
+
+                <p class="post-author">
+                    By <strong>{{ post.user.first_name }}</strong>
+                </p>
+
+                <a href="{% url 'detailpost' post.id %}" class="view-btn">
+                    View Post
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="no-results">
+            <h3>No Posts Found</h3>
+            <p>Try searching with different keywords.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
