@@ -20,14 +20,17 @@ The project is designed to demonstrate core backend development concepts using D
 
   1. Django Class-Based Views
   2. Django Authentication & Authorization System
-  3. CRUD Operations
-  4. Form Handling
-  5. Data Validation using Regex
-  6. Database Relationships
-  7. Like, Dislike and Comment System
-  8. User Session Management
-  9. Template Rendering
-  10. Pagination Implemented
+  3. Admin Post Approval
+  4. CRUD Operations
+  5. Form Handling
+  6. Data Validation using Regex
+  7. Database Relationships
+  8. Like, Dislike and Comment System
+  9. User Session Management
+  10. User Post View
+  11. Searching the post
+  12. Template Rendering
+  13. Pagination Implemented
 
 ⚙️ Tech Stack
 | Technology           | Purpose                   |
